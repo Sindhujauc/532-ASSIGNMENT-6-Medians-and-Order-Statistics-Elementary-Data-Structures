@@ -1,0 +1,14 @@
+class DynamicArray:
+    def __init__(self):
+        self.array = []
+    
+    def insert(self, value):
+        self.array.append(value)
+    
+    def delete(self, index):
+        if 0 <= index < len(self.array):
+            return self.array.pop(index)
+        raise IndexError("Index out of range")
+    
+    def access(self, index):
+        return self.array[index]

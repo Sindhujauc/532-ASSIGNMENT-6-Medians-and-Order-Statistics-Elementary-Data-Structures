@@ -1,0 +1,22 @@
+def deterministic_select(arr, k):
+    if len(arr) <= 5:
+        return sorted(arr)[k]
+
+    # Step 1: Divide array into groups of 5 and find medians
+    medians = [sorted(arr[i:i+5])[len(arr[i:i+5]) // 2] for i in range(0, len(arr), 5)]
+    
+    # Step 2: Recursively find the median of the medians
+    pivot = deterministic_select(medians, len(medians) // 2)
+    
+    # Step 3: Partition array around the pivot
+    low = [x for x in arr if x < pivot]
+    high = [x for x in arr if x > pivot]
+    equal = [x for x in arr if x == pivot]
+    
+    # Step 4: Recur on appropriate partition
+    if k < len(low):
+        return deterministic_select(low, k)
+    elif k < len(low) + len(equal):
+        return pivot
+    else:
+        return deterministic_select(high, k - len(low) - len(equal))
